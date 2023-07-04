@@ -4,7 +4,6 @@ other utils which are dependent of your projects should not be included in this 
 """
 
 
-import cv2 as cv
 import cv2
 import sys
 import os
