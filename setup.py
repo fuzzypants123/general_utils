@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="general_utils",
+    name="gutils",
     version="1.0",
     author="weiwang",
     author_email="weiwang201806@gmail.com",
