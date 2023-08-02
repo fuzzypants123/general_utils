@@ -543,3 +543,19 @@ def add_indent_json(path):
         dat = json.load(f)
     with open(path, 'w') as f:
         json.dump(dat, f, indent=2, ensure_ascii=False)
+
+
+def run_time(func):
+    """
+    获取运行耗时的装饰器
+    Args:
+        func (_type_): _description_
+    """
+    tvr = TimeEvaluator(False)
+    def inner(*args, **kwargs):
+        tvr.reset()
+        result = func(*args, **kwargs)
+        print(f'cost {tvr.elapsed_time()}ms')
+        return result
+
+    return inner
