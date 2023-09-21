@@ -21,6 +21,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, ALL_COMPLETED, as_completed
 from pprint import pprint
 from PIL import Image
+from  matplotlib import pyplot as plt
 from PIL.ExifTags import TAGS
 
 
@@ -559,3 +560,17 @@ def run_time(func):
         return result
 
     return inner
+
+
+def plt_show_ims(pil_style_ims):
+    """
+    逐行显示多张图片
+    Args:
+        pil_style_ims (_type_): list of RGB image
+    """
+    N = len(pil_style_ims)
+    plt.figure()
+    for i in range(N):
+        plt.subplot(N, 1, i+1)
+        plt.imshow(pil_style_ims[i])
+    plt.show()

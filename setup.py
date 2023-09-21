@@ -16,7 +16,8 @@ setup(
         'opencv_python>=4.2.0.34',
         'Pillow>=8.0.0',
         'torch>=1.6.0',
-        'tqdm>=4.11.0'
+        'tqdm>=4.11.0',
+        'matplotlib>=3.6.0',
     ],
     
 )
