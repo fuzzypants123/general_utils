@@ -574,3 +574,38 @@ def plt_show_ims(pil_style_ims):
         plt.subplot(N, 1, i+1)
         plt.imshow(pil_style_ims[i])
     plt.show()
+
+
+
+def dir_imgs_to_video(dst_dir, video_pth, fps=10.):
+    imgs = find_imgs(dst_dir)
+    imgs = sorted(imgs, key=lambda x: x)
+    imgs_to_video(imgs, video_pth, fps)
+    
+    
+
+def imgs_to_video(imgs, video_pth, fps=10., size=None):
+    """
+    opencv 接口将图像转为视频
+    Args:
+        imgs (_type_): _description_
+        video_pth (_type_): _description_
+        fps (_type_, optional): _description_. Defaults to 10..
+        size (_type_, optional): _description_. Defaults to None.
+    """
+    if not isinstance(imgs[0], np.ndarray):
+        _ims = list()
+        for img in imgs:
+            im =cv2.imread(img)
+            assert im is not None
+            _ims.append(im)
+        imgs = _ims
+    
+    if size is None:
+        size = imgs[0].shape[:2][::-1]  # w, h
+
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 使用mp4格式
+    out = cv2.VideoWriter(video_pth, fourcc, fps, size)
+    for img in tqdm(imgs):
+        out.write(img)
+    out.release()
