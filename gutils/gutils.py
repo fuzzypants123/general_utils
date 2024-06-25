@@ -444,10 +444,13 @@ def print_tensor(**kwargs):
     print()
     
     
-def check_var(**kwargs):
+
+def check_var(sep = '\n', **kwargs):
+    info = ''
     for k, v in kwargs.items():
-        print(f'{k}: {v}')
-    print()
+        info += f'{k}: {v}'
+        info += sep
+    print(info)
 
 
 
