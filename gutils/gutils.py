@@ -304,19 +304,12 @@ def multi_mask_color(src, mask, color_tab, alpha=0.5):
     return ret
 
 
-def tile_ims(ims, color=True):
-    h, w = ims[0].shape[:2]
-    if color:
-        ret = np.zeros((h, w*len(ims), 3), dtype=ims[0].dtype)
-    else:
-        ret = np.zeros((h, w*len(ims)), dtype=ims[0].dtype)
-
-    for i, im in enumerate(ims):
-        ret[:, i*w:(i+1)*w] = im
-    return ret
 
 
-def tile_ims1(ims, color=True, style=0):
+
+
+
+def tile_ims(ims, color=True, style=0):
     assert len(ims) !=0
     hs, ws = [im.shape[0] for im in ims], [im.shape[1] for im in ims]
   
@@ -343,6 +336,22 @@ def tile_ims1(ims, color=True, style=0):
     return ret
 
 
+
+def align_tile_imgs(ims, align, direc='hori'):
+    assert direc in ['hori', 'verti']
+    def _resize(im):
+        h, w = im.shape[:2]
+        if direc == 'hori':
+            _h = round(h * ( align/w))
+            return cv2.resize(im, dsize=(align, _h))
+        elif direc == 'verti':
+            _w = round(w * (align/h))
+            return cv2.resize(im, dsize=(_w, align))
+        else:
+            raise NotImplementedError
+    style_tab  = {'hori':1, 'verti': 0}
+    return tile_ims([_resize(im) for im  in ims], style=style_tab[direc])
+    
 
 
 def get_timestamp():
