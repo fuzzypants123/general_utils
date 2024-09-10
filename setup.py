@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gutils",
-    version="0.0.1",
+    version="0.0.2",
     author="weiwang",
     author_email="weiwang201806@gmail.com",
     description="my python general utils",
