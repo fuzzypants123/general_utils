@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="gutils",
-    version="0.0.2",
+    version="0.0.3",
     author="weiwang",
     author_email="weiwang201806@gmail.com",
     description="my python general utils",
@@ -15,7 +15,6 @@ setup(
         'numpy>=1.19.0',
         'opencv-python>=4.2.0.32',
         'Pillow>=8.0.0',
-        'torch>=1.6.0',
         'tqdm>=4.11.0',
         'matplotlib>=3.6.0',
     ],

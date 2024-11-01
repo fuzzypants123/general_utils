@@ -16,7 +16,7 @@ import shutil
 import random
 import time
 import glob
-import torch
+# import torch
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, ALL_COMPLETED, as_completed
 from pprint import pprint
@@ -32,15 +32,13 @@ class TimeEvaluator(object):
         self.with_cuda = with_cuda
 
     def reset(self):
-        if self.with_cuda:
-            torch.cuda.synchronize()
+       
         self.beg_time = time.perf_counter()
 
     def elapsed_time(self):
         if self.beg_time is None:
             return 0
-        if self.with_cuda:
-            torch.cuda.synchronize()
+        
         req_end = time.perf_counter()
         elapse = round(((req_end - self.beg_time) * 1000), 3)
         self.beg_time = None
@@ -437,20 +435,13 @@ def plt_fig2np(fig):
 
 def check_tensor(**kwargs):
     for k, v in kwargs.items():
-        if isinstance(v, (torch.Tensor, np.ndarray)):
+        if isinstance(v, (np.ndarray,)):
             print(f'{k} shape: {v.shape}')
         else:
             print(f'{k} is not a tensor')
     print()
     
 
-def print_tensor(**kwargs):
-    for k, v in kwargs.items():
-        if isinstance(v, torch.Tensor):
-            print(f'{k}: {v}')
-        else:
-            print(f'{k} is not a tensor')
-    print()
     
     
 
@@ -509,38 +500,14 @@ def calc_rotate_matrix_with_angels(angles, order='XYZ', internal_rotation=True):
     return ret    
 
 
-
-def profile_latency(model, inps, cuda=True, times=20, warm_ratio=0.3):
-    assert times>3, f'{times} must > 3'
-    if cuda:
-        assert torch.cuda.is_available()
-        print(f'IN DEVICE {torch.cuda.get_device_name(0)}')
-        inps  = list(inps)
-        for i, inp in enumerate(inps):
-            if isinstance(inp, (list, tuple)):
-                inp = [i.cuda() for i in inp]
-            else:
-                inp = inp.cuda()
-            inps[i] = inp
-        model.cuda()
-    tvr = TimeEvaluator(cuda)
-    latencys = list()
-    for i in range(times):
-        tvr.reset()
-        model(*inps)
-        latency = tvr.elapsed_time()
-        latencys.append(latency)
-    warm_beg = int(times*warm_ratio)
-    mean_latency = sum(latencys[warm_beg:])/ len(latencys[warm_beg:])
-    print(f'run {times} times, mean_latency {mean_latency}ms. details:')
-    pprint(latencys)      
+   
     
     
 def check_list_tensor(**kwargs):
     for name, l in kwargs.items():
         print(f'{name}: {len(l)} items')
         for i, item  in enumerate(l):
-            if isinstance(item, (torch.Tensor, np.ndarray)):
+            if isinstance(item, ( np.ndarray,)):
                 print(f'{i} shape: {item.shape}')
                 
                 
