@@ -588,3 +588,12 @@ def imgs_to_video(imgs, video_pth, fps=10., size=None):
     for img in tqdm(imgs):
         out.write(img)
     out.release()
+
+
+# 提取最后一层的路径，可选是否要 格式后缀
+def get_basename(pth, wth_ext=False):
+    ret =osp.basename(pth)
+    if not wth_ext:
+        ret = osp.splitext(ret)[0]
+    return ret
+
