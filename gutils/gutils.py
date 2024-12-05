@@ -597,3 +597,12 @@ def get_basename(pth, wth_ext=False):
         ret = osp.splitext(ret)[0]
     return ret
 
+
+# 输入 原图宽度和内参的fx, 计算水平fov 
+# 细节 https://blog.csdn.net/jaccen2012/article/details/108749465
+def get_horiz_fov(width, fx):
+
+    def deg2angle(deg):
+        return deg/math.pi * 180
+
+    return 2* deg2angle(math.atan(width/(2*fx)))
