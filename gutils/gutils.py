@@ -442,9 +442,6 @@ def check_tensor(**kwargs):
     print()
     
 
-    
-    
-
 def check_var(sep = '\n', **kwargs):
     info = ''
     for k, v in kwargs.items():
@@ -606,3 +603,16 @@ def get_horiz_fov(width, fx):
         return deg/math.pi * 180
 
     return 2* deg2angle(math.atan(width/(2*fx)))
+
+
+
+# 传参函数名，根据函数名执行某个函数
+def main(func_name):
+    import inspect
+    current_module = sys.modules[__name__]
+    function_dict = {}
+    for name, obj in inspect.getmembers(current_module, inspect.isfunction):
+        if obj.__module__ == __name__:
+            function_dict[name] = obj
+    assert func_name in function_dict, f'{func_name} ERR'
+    function_dict[func_name]()
